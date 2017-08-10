@@ -33,7 +33,8 @@ const srcs = {
             'node_modules/tether/dist/js/tether.min.js',
             'node_modules/knockout/build/output/knockout-latest.js',
             'node_modules/bootstrap-notify/bootstrap-notify.min.js'
-    ]
+    ],
+    htmlIncludes: 'src/scripts/**/*.html'
 };
 
 
@@ -83,6 +84,16 @@ gulp.task('html', function () {
         .pipe(browserSync.reload({stream: true}));
 });
 
+gulp.task('htmlIncludes', function () {
+    const htmlDest = './build/html';
+
+    return gulp.src(srcs.htmlIncludes)
+        .pipe(changed(dests.base))
+        .pipe(minifyHtml())
+        .pipe(gulp.dest(htmlDest))
+        .pipe(browserSync.reload({stream: true}));
+});
+
 gulp.task('scripts', function () {
     let tsProject = typescript.createProject('tsconfig.json');
     return tsProject.src()
@@ -113,7 +124,7 @@ gulp.task('copyWebsite', function () {
     gulp.src(srcs.buildArtefacts).pipe(gulp.dest(dests.githubPages));
 });
 
-gulp.task('build', ['copy', 'assets', 'html', 'scripts', 'styles']);
+gulp.task('build', ['copy', 'assets', 'html', 'htmlIncludes', 'scripts', 'styles']);
 
 gulp.task('website', done => {
     runSequence('clean', 'build', 'cleanWebsite', 'copyWebsite', 'cname', () => done());
@@ -122,6 +133,7 @@ gulp.task('website', done => {
 gulp.task('default', function (done) {
     runSequence('clean', 'build', 'browserSync', function () {
         gulp.watch(srcs.html, ['html']);
+        gulp.watch(srcs.htmlIncludes, ['htmlIncludes']);
         gulp.watch(srcs.assets, ['assets']);
         gulp.watch(srcs.scripts, ['scripts']);
         gulp.watch(srcs.styles, ['styles']);
