@@ -15,6 +15,7 @@ namespace GameConstants {
     export const GYM_TIME = 3000;
     export const GYM_TICK = 1;
     export const ACHIEVEMENT_TICK = 1000;
+    export const ITEM_TICK = 1000;
 
     export const AMOUNT_OF_POKEMONS = 151;
     export const AMOUNT_OF_BADGES = 8;

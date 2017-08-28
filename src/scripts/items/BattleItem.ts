@@ -2,8 +2,9 @@
 class BattleItem extends Item {
 
     type: GameConstants.BattleItemType;
+    timeLeft: KnockoutObservable<number>;
 
-    constructor(type: GameConstants.BattleItemType) {
+    constructor(type: GameConstants.BattleItemType, time: number = 60) {
         let basePrice = 1000;
 
         switch (type) {
@@ -30,12 +31,27 @@ class BattleItem extends Item {
         let priceMultiplier = 1;
         super(GameConstants.BattleItemType[type], basePrice, priceMultiplier, GameConstants.Currency.money);
         this.type = type;
+        this.timeLeft = ko.observable(time);
     }
 
     buy(amt: number) {
     }
 
     use() {
+        switch (this.type) {
+            case GameConstants.BattleItemType.xAttack:
+                break;
+            case GameConstants.BattleItemType.xClick:
+                break;
+            case GameConstants.BattleItemType.xExp:
+                break;
+            case GameConstants.BattleItemType.Token_collector:
+                break;
+            case GameConstants.BattleItemType.Item_magnet:
+                break;
+            case GameConstants.BattleItemType.Lucky_incense:
+                break;
+        }
     }
 }
 

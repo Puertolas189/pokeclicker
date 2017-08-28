@@ -88,8 +88,7 @@ class Game {
         }
         Save.counter += GameConstants.TICK_TIME;
         Underground.counter += GameConstants.TICK_TIME;
-
-
+        ItemHelper.counter += GameConstants.TICK_TIME;
 
         switch (Game.gameState()) {
             case GameConstants.GameState.fighting: {
@@ -115,6 +114,10 @@ class Game {
                 DungeonRunner.tick();
                 break;
             }
+        }
+
+        if (ItemHelper.counter > GameConstants.ITEM_TICK) {
+            ItemHelper.tick();
         }
 
         if (Save.counter > GameConstants.SAVE_TICK) {
